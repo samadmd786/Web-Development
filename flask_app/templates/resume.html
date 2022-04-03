@@ -1,0 +1,66 @@
+{% extends 'shared/layout.html' %}
+
+{% block maincontent %}
+<div class="my-data">
+  <p> Md Samad </p>
+</div>
+<p class="aligncenter"><a href="https://github.com/samadmd786">Github</a></p>
+<div id="textbox">
+  <p class="alignright">samadmd6020@gmail.com</p>
+  <p class="alignleft">614-806-0483</p>
+  <div style="clear: both;"></div>
+
+</div>
+<hr>
+
+<!-- <hr> -->
+<div class="education_text">
+  <p>Education</p>
+</div>
+<!-- For each institution - generate a row -->
+
+{% for inst_id, inst in resume_data.items() %}
+<!-- Do something... -->
+<h1>{{inst["name"]}}</h1>
+<h2>{{inst['type']}}</h2>
+<p>
+<h3>{{inst['city']}}, {{inst['state']}}</h3>
+</p>
+{% if inst['positions'] != {} %}
+{% for pos_id, pos in inst['positions'].items() %}
+<div class="date">
+  <h2>{{pos['title']}}</h2>
+  <h4>{{pos['start_date']}} {{pos['end_date']}}</h4>
+</div>
+<h2>{{pos['responsibilities']}}</h2>
+
+
+
+<!-- <h1>{{pos['experiences']}}</h1> -->
+
+
+
+{% endfor %}
+
+{% endif %}
+
+
+{% if inst['positions']['experiences'] != {} %}
+{% for exp_id, exp in inst['positions']['experiences'].items() %}
+<h2>{{exp['description']}}</h2>
+
+
+{% endfor %}
+{% endif %}
+
+
+<hr>
+{% endfor %}
+
+<br>
+<br>
+<br>
+<br>
+
+
+{% endblock %}

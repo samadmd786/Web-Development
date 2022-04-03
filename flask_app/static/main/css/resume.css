@@ -1,0 +1,57 @@
+.my-data {
+    font-weight: bold;
+    font-size: 300%;
+    text-align: center;
+}
+
+.alignleft {
+    padding-left: 5%;
+	float: left;
+    font-size: 110%;
+}
+.alignright {
+	float: right;
+    padding-right: 5%;
+    font-size: 110%;
+}
+.aligncenter{
+    /* text-align: center; */
+    text-align: center;
+    font-size: 140%;
+}
+
+.aligncenter:hover{
+    color: #7fffd4;
+}
+
+.aligncenter:visited{
+    color: #19b4b4;
+}
+
+.datealignright{
+    /* float: right; */
+    padding-left: 80%;
+    /* margin-right: %; */
+}
+.education_text{
+    font-weight: bold;  
+    text-align: center;
+    font-size: 20px; 
+}
+
+.date{
+    display: inline-block;
+    height: 3%;
+    width: 100%;
+}
+.date > h2{
+    float: left;
+}
+
+.date > h4{
+    float: right;
+}
+
+.education_text {
+    font-size: 130%;
+}

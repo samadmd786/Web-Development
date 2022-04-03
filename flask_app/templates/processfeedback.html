@@ -1,0 +1,23 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Feedback Form{% endblock %}
+
+{% block maincontent %}
+<div class="feedback-text">
+  <h1>FeedBack Form</h1>
+</div>
+{% for feed in feedback %}
+
+<p>{{feed['name']}}</p>
+<p>{{feed['email']}}</p>
+<p>{{feed['comment']}}</p>
+<hr>
+
+
+
+{% endfor %}
+<hr>
+
+<h2></h2>
+
+{% endblock %}

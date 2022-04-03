@@ -1,0 +1,4 @@
+"inst_id","type","name","department","address","city","state","zip"
+"1","Academia","Michigan State University","Computer Science",NULL,"East Lansing","Michigan",NULL
+"2","Industry","TIAA","Software Development Intern",NULL,"Columbus","Ohio",NULL
+"3","Industry","Delta Dental of Michigan","DevOps and Automation Intern",NULL,"East Lansing","Michigan",NULL

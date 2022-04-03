@@ -1,0 +1,40 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Project{% endblock %}
+
+{% block maincontent %}
+
+<div class="project-disc">
+    <div class="project-bar-title">
+        <p>Below is the list of projects I worked on in CSE 477:</p>
+    </div>
+    <div class="project-bar-disc">
+        <p>Click on the image or hyperlink in the description to learn more.</p>
+    </div>
+    <hr>
+</div>
+<div class="row">
+    <div class="column">
+        <div class="project-img"><a href="piano.html">
+                <img src="../static/main/images/piano.jpeg" alt="piano-pic"></a>
+        </div>
+    </div>
+    <div class="column">
+        <h1>JavaScript Piano</h1> As part of my first homework assignment in CSE477, I developed an interactive
+        piano built in pure HTML, CSS and JavaScript. This tool (in addition to my web page) highlight my
+        ability to build beautiful and mobile friendly front end applications.
+        <a href="piano.html"> Click here to see and play</a>
+
+    </div>
+
+
+</div>
+
+
+<div class="coming_soon">
+    <hr>
+    <p>More Coming Soon!</p>
+    <br>
+</div>
+
+{% endblock %}

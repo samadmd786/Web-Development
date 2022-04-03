@@ -1,0 +1,120 @@
+.piano-disc {
+    text-align: justify;
+    text-justify: inner-word;
+    text-align: center;
+    font-size: 150%;
+    font-style: italic;
+
+}
+
+.full-piano {
+    margin: 10%;
+    background: #0a3446;
+    border-radius: 25px;
+    object-fit: cover;
+}
+
+/* The Great Old One */
+#piano-text {
+    font-size: 50px;
+    text-justify: inter-word;
+    color: #ffffff;
+    text-align: center;
+    font-style: italic;
+    z-index: 10;
+}
+
+
+.piano {
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+
+}
+
+.white {
+    width: 9%;
+    min-width: 60px;
+    height: 70%;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    color: #000000;
+}
+
+.black {
+    width: 8%;
+    height: 45%;
+    margin-left: -4%;
+    margin-right: -4%;
+    z-index: 1;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+
+.white.active {
+    background-color: #8c8cce;
+}
+
+.black.active {
+    background-color: #886868;
+}
+
+.hints {
+    opacity: 0;
+    animation: fadeIn 3s
+}
+
+/* style for fading in of the text on piano */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+
+.piano:hover .hints {
+    opacity: 100%;
+    transition: opacity 2s
+}
+
+
+.awkownimage {
+    max-height: 650px;
+    /* margin-top: 20%; */
+    position: absolute;
+    height: 100%;
+    width: 80%;
+    top: 0;
+    right: 10;
+    z-index: 2;
+
+
+}
+
+.awkownimage img {
+    margin-top: 20%;
+    height: 100%;
+    width: 10%;
+    /* z-index: 2; */
+
+}

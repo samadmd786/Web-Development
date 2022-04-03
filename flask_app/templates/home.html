@@ -1,0 +1,36 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Home{% endblock %}
+
+{% block maincontent %}
+
+<div class="row">
+  <div class="column">
+      <img src="../static/main/images/my-pic.jpeg" alt="my-pic">
+  </div>
+  <div class="column">
+      <p><b>Md Samad </b>is a student at Michigan State University  graduating
+          in May 2022 with a Bachelor's Degree in Computer Science.
+          <br><br>
+          He is currently a DevOps and Automation Intern at Delta Dental of Michigan working with Kubernetes
+          and Dynatrace.
+          <br><br>
+          He has technical skills in many programmings
+          languages like Python, C+, C, and Java
+          <br><br>
+          He is very passionate about coding and is always ready to learn new technologies
+      </p>
+  </div>
+</div>
+
+<!-- Fun Fact section -->
+<div class="fun-fact-title">
+  <hr>
+  <p>Fun fact about me:</p>
+</div>
+<div class="fun-fact">
+  <p>{{fun_fact}}</p>
+</div>
+
+
+{% endblock %}

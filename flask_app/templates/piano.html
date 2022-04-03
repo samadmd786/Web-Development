@@ -1,0 +1,97 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Piano{% endblock %}
+
+{% block maincontent %}
+
+
+
+<div class="piano-disc">
+    <p>Behold piano great and old. it's master slumbers in far off cold. if you wish to see anew, call out to it
+        - we see you.</p>
+</div>
+<hr>
+<div class="full-piano">
+    <p id="piano-text">The Great Old One</p>
+
+
+    <div class="piano">
+        <!-- layering html tags to create a piano -->
+        <div class="key white" data-note="A">
+            <span class="hints">A</span>
+        </div>
+
+        <div class="key black" data-note="W">
+            <span class="hints">W</span>
+        </div>
+        <div class="key white" data-note="S">
+            <span class="hints">S</span>
+        </div>
+        <div class="key black" data-note="E">
+            <span class="hints">E</span>
+        </div>
+        <div class="key white" data-note="D">
+            <span class="hints">D</span>
+        </div>
+        <div class="key white" data-note="F">
+            <span class="hints">F</span>
+        </div>
+        <div class="key black" data-note="T">
+            <span class="hints">T</span>
+        </div>
+        <div class="key white" data-note="G">
+            <span class="hints">G</span>
+        </div>
+        <div class="key black" data-note="Y">
+            <span class="hints">Y</span>
+        </div>
+        <div class="key white" data-note="H">
+            <span class="hints">H</span>
+        </div>
+        <div class="key black" data-note="U">
+            <span class="hints">U</span>
+        </div>
+        <div class="key white" data-note="J">
+            <span class="hints">J</span>
+        </div>
+        <div class="key white" data-note="K">
+            <span class="hints">K</span>
+        </div>
+        <div class="key black" data-note="O">
+            <span class="hints">O</span>
+        </div>
+        <div class="key white" data-note="L">
+            <span class="hints">L</span>
+        </div>
+        <div class="key black" data-note="P">
+            <span class="hints">P</span>
+        </div>
+        <div class="key white" data-note=";">
+            <span class="hints">;</span>
+        </div>
+        <img class="awkownimage" src="../static/piano/images/texture.jpeg" alt="awoken">
+    </div>
+</div>
+<!-- Different audio tags to play different sounds -->
+<audio id="A" src="http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav"></audio>
+<audio id="W" src="http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav"></audio>
+<audio id="S" src="http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav"></audio>
+<audio id="E" src="http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav"></audio>
+<audio id="D" src="http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav"></audio>
+<audio id="F" src="http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav"></audio>
+<audio id="T" src="http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav"></audio>
+<audio id="G" src="http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav"></audio>
+<audio id="Y" src="http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav"></audio>
+<audio id="H" src="http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav"></audio>
+<audio id="U" src="http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav"></audio>
+<audio id="J" src="http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav"></audio>
+<audio id="K" src="http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav"></audio>
+<audio id="O" src="http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav"></audio>
+<audio id="L" src="http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav"></audio>
+<audio id="P" src="http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav"></audio>
+<audio id=";" src="http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"></audio>
+<audio id="end" src="https://orangefreesounds.com/wp-content/uploads/2020/09/Creepy-piano-sound-effect.mp3?_=1"></audio>
+
+
+
+{% endblock %}

@@ -1,0 +1,174 @@
+/* Nav bar properties */
+
+body {
+    margin: 0px;
+    font-family: 'segoe ui';
+}
+
+.nav {
+    height: 50px;
+    width: 100%;
+    background-color: #4d4d4d;
+    position: relative;
+}
+
+.nav>.nav-header {
+    display: inline;
+}
+
+.nav>.nav-header>.nav-title {
+    display: inline-block;
+    font-size: 22px;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Nav button styling */
+.nav>.nav-btn {
+    display: none;
+}
+
+/* nav links styling */
+.nav>.nav-links {
+    display: inline;
+    float: right;
+    font-size: 18px;
+    margin-left: 5vw;
+}
+
+/* links  */
+.nav>.nav-links>a {
+    display: inline-block;
+    padding-right: 40px;
+    padding-top: 10px;
+    text-decoration: none;
+    color: #efefef;
+}
+
+/* linkedIn text */
+.nav>.nav-links>.linkedIn-text {
+    display: none;
+}
+
+/* linkedIn image */
+.nav>.nav-links>.linkedIn-logo img {
+    max-width: 20px;
+    max-height: 30px;
+    float: right;
+    margin-top: -7%;
+    margin-right: 1%;
+
+
+
+}
+
+.nav>.nav-links>.linkedIn-icon {
+    height: 30px;
+    width: 20px;
+
+}
+
+/* style for hovering over links */
+.nav>.nav-links>a:hover {
+    color: #008000;
+
+}
+
+.nav>.nav-links>.linkedIn-text>a:hover {
+    color: #008000;
+    text-decoration: none;
+}
+
+
+.nav>.nav-links>a:visited {
+    color: #d30f51;
+
+}
+
+.nav>.nav-links>.linkedIn-text>a:visited {
+    color: #d30f51;
+    text-decoration: none;
+
+}
+
+.nav>.nav-links>a:active {
+    color: #40cfcf;
+
+}
+
+.nav>.nav-links>.linkedIn-text>a:active {
+    color: #40cfcf;
+    text-decoration: none;
+
+}
+
+
+.nav>#nav-check {
+    display: none;
+}
+
+/* if screen size is less than 650px */
+@media (max-width: 650px) {
+    .nav>.nav-btn {
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+
+    .nav>.nav-btn img {
+        height: 70%;
+        width: 100%;
+    }
+
+    .nav>.nav-btn>label {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        padding: 13px;
+    }
+
+
+    .nav>.nav-btn>label:hover, .nav #nav-check:checked~.nav-btn>label {
+        background-color: #4410104d;
+    }
+
+
+    .nav>.nav-links {
+        position: absolute;
+        display: block;
+        width: 100%;
+        background-color: #333333;
+        height: 0vh;
+        transition: all 0.3s ease-in;
+        overflow-y: hidden;
+        top: 50px;
+        left: 0px;
+    }
+
+    .nav>.nav-links>a {
+        display: block;
+        width: 100%;
+    }
+
+    .nav>#nav-check:not(:checked)~.nav-links {
+        height: 0vh;
+    }
+
+    .nav>#nav-check:checked~.nav-links {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+    }
+
+    .nav>.nav-links>.linkedIn-text {
+        display: block;
+        width: 10vw;
+        height: 10vh;
+        color: #efefef;
+        text-decoration: none;
+    }
+
+    .nav>.nav-links>.linkedIn-logo {
+        display: none;
+    }
+}
