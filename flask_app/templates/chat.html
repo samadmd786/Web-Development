@@ -1,0 +1,99 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Chat{% endblock %}
+
+
+{% block extrajs %}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket;
+    $(document).ready(function () {
+
+        socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');  //change it to https before pushing
+        socket.on('connect', function () {
+            socket.emit('joined', {});
+        });
+
+
+
+        // This is to display who joined the room
+        socket.on('status', function (data) {
+            let tag = document.createElement("p");
+            let text = document.createTextNode(data.msg);
+            let element = document.getElementById("chat");
+            tag.appendChild(text);
+            tag.style.cssText = data.style;
+            element.appendChild(tag);
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+
+        });
+
+
+        // This is to diplsay the message 
+        socket.on('status1', function (data) {
+            let tag1 = document.createElement("p");
+            let text1 = document.createTextNode(data.msg);
+            let element1 = document.getElementById("chat");
+            tag1.appendChild(text1);
+            tag1.style.cssText = data.style;
+            element1.appendChild(tag1);
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+
+        });
+
+        // Here we display who left the room 
+        socket.on('status2', function (data) {
+            let tag2 = document.createElement("p");
+            let text2 = document.createTextNode(data.msg);
+            console.log(data.msg);
+            let element2 = document.getElementById("chat");
+            tag2.appendChild(text2);
+            tag2.style.cssText = data.style;
+            element2.appendChild(tag2);
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+
+        });
+
+
+
+    });
+
+
+    function send_message() {
+        var message1 = document.getElementById("send-message").value;
+        socket.emit('send-message', message1);
+        document.getElementById('send-message').value = '';
+    }
+
+
+    function Left_chat() {
+        socket.emit('left', {});
+    }
+
+    var input = document.getElementById("send-btn");
+    input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("btn").click();
+        }
+    });
+</script>
+{% endblock %}
+
+
+{% block maincontent %}
+
+<p class="chat-title">Chat</p>
+
+<div id='chat' contenteditable></div>
+
+<p class="text">
+    <input placeholder="Enter Your Message Here" id='send-message' />
+    <button type="button" onclick="send_message()" id="send-btn">Send Message</button>
+    <button type="button" onclick="Left_chat()" id="btn">Leave Chat</button>
+</p>
+
+<br>
+<br>
+{% endblock %}

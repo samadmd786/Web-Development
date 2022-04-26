@@ -1,5 +1,5 @@
-from ast import Delete
-import queue
+from cProfile import run
+import re
 from select import select
 import mysql.connector
 import glob
@@ -7,7 +7,11 @@ import json
 import csv
 from io import StringIO
 import itertools
-import datetime
+import hashlib
+import os
+import cryptography
+from cryptography.fernet import Fernet
+from math import pow
 
 
 class database:
@@ -20,8 +24,20 @@ class database:
         self.user = 'master'
         self.port = 3306
         self.password = 'master'
+        self.tables = ['institutions', 'positions',
+                       'experiences', 'skills', 'feedback', 'users']
 
-    def query(self, query="SELECT CURDATE()", parameters=None):
+        # NEW IN HW 3-----------------------------------------------------------------
+        self.encryption = {'oneway': {'salt': b'averysaltysailortookalongwalkoffashortbridge',
+                                      'n': int(pow(2, 5)),
+                                      'r': 9,
+                                      'p': 1
+                                      },
+                           'reversible': {'key': '7pK_fnSKIjZKuv_Gwc--sZEMKn2zc8VvD6zS96XcNHE='}
+                           }
+        # -----------------------------------------------------------------------------
+
+    def query(self, query="SELECT * FROM users", parameters=None):
 
         cnx = mysql.connector.connect(host=self.host,
                                       user=self.user,
@@ -50,119 +66,31 @@ class database:
         cnx.close()
         return row
 
-    def about(self, nested=False):
-        query = """select concat(col.table_schema, '.', col.table_name) as 'table',
-                          col.column_name                               as column_name,
-                          col.column_key                                as is_key,
-                          col.column_comment                            as column_comment,
-                          kcu.referenced_column_name                    as fk_column_name,
-                          kcu.referenced_table_name                     as fk_table_name
-                    from information_schema.columns col
-                    join information_schema.tables tab on col.table_schema = tab.table_schema and col.table_name = tab.table_name
-                    left join information_schema.key_column_usage kcu on col.table_schema = kcu.table_schema
-                                                                     and col.table_name = kcu.table_name
-                                                                     and col.column_name = kcu.column_name
-                                                                     and kcu.referenced_table_schema is not null
-                    where col.table_schema not in('information_schema','sys', 'mysql', 'performance_schema')
-                                              and tab.table_type = 'BASE TABLE'
-                    order by col.table_schema, col.table_name, col.ordinal_position;"""
-        results = self.query(query)
-        if nested == False:
-            return results
-
-        table_info = {}
-        for row in results:
-            table_info[row['table']] = {} if table_info.get(
-                row['table']) is None else table_info[row['table']]
-            table_info[row['table']][row['column_name']] = {} if table_info.get(row['table']).get(
-                row['column_name']) is None else table_info[row['table']][row['column_name']]
-            table_info[row['table']][row['column_name']
-                                     ]['column_comment'] = row['column_comment']
-            table_info[row['table']][row['column_name']
-                                     ]['fk_column_name'] = row['fk_column_name']
-            table_info[row['table']][row['column_name']
-                                     ]['fk_table_name'] = row['fk_table_name']
-            table_info[row['table']][row['column_name']
-                                     ]['is_key'] = row['is_key']
-            table_info[row['table']][row['column_name']
-                                     ]['table'] = row['table']
-        return table_info
-
     def createTables(self, purge=False, data_path='flask_app/database/'):
         # print('I create and populate database tables.')
-       
-        self.query("DROP table IF EXISTS skills")
-        self.query("DROP table IF EXISTS experiences")
-        self.query("DROP table IF EXISTS positions")
-        self.query("DROP table IF EXISTS institutions")
-        self.query("DROP table IF EXISTS feedback")
 
-        query = open(data_path+"create_tables/institutions.sql")
+        table = ["skills", "experiences", "positions",
+                 "institutions", "feedback"]
+        for k in table:
+            self.query(f"""DROP table IF EXISTS {k};""")
+
+        table = ["institutions", "positions",
+                 "experiences", "skills", "feedback"]
+        for table_name in table:
+            query = open(data_path+"create_tables/"+table_name+".sql")
+            file = query.read()
+            self.query(file)
+
+            file = open(data_path+"initial_data/"+table_name+".csv")
+            csv_file = csv.reader(file)
+            a = (next(csv_file, None))
+            for i in csv_file:
+                self.insertRows(table_name, [j.strip() for j in a], i)
+        query = open(data_path+"create_tables/users.sql")
         file = query.read()
         self.query(file)
 
-        file = open(data_path+"initial_data/institutions.csv")
-        csv_file = csv.reader(file)
-
-        next(csv_file, None)
-        for i in csv_file:
-            self.insertRows('institutions', [
-                            "inst_id", "type", "name", "department", "address", "city", "state", "zip"], i)
-
-        # positions table
-        query = open(data_path+"create_tables/positions.sql")
-        file = query.read()
-        self.query(file)
-
-        file = open(data_path+"initial_data/positions.csv")
-        csv_file = csv.reader(file)
-
-        next(csv_file, None)
-        for i in csv_file:
-            self.insertRows('positions', [
-                            "position_id", "inst_id", "title", "responsibilities", "start_date", "end_date"], i)
-
-        # #experiences table
-        query = open(data_path+"create_tables/experiences.sql")
-        file = query.read()
-        self.query(file)
-
-        file = open(data_path+"initial_data/experiences.csv")
-        csv_file = csv.reader(file)
-
-        next(csv_file, None)
-        for i in csv_file:
-            self.insertRows('experiences', [
-                            "experience_id", "position_id", "name", "description", "hyperlink", "start_date", "end_date"], i)
-
-        # #skill table
-        query = open(data_path+"create_tables/skills.sql")
-        file = query.read()
-        self.query(file)
-
-        file = open(data_path+"initial_data/skills.csv")
-        csv_file = csv.reader(file)
-
-        next(csv_file, None)
-        for i in csv_file:
-            self.insertRows('skills', [
-                            "skill_id", "experience_id", "name", "skill_level"], i)
-
-        # feedback table
-        query = open(data_path+"create_tables/feedback.sql")
-        file = query.read()
-        self.query(file)
-
-        file = open(data_path+"initial_data/feedback.csv")
-        csv_file = csv.reader(file)
-
-        next(csv_file, None)
-        for i in csv_file:
-            self.insertRows('feedback', [
-                            "comment_id", "name", "email", "comment"], i)
-        
         self.getResumeData()
-
 
     def insertRows(self, table='table', columns=['x', 'y'], parameters=[['v11', 'v12'], ['v21', 'v22']]):
         # print('I insert things into the database.')
@@ -251,8 +179,8 @@ class database:
         # print(resumeData.items())
         return resumeData
 
-    def send_feedback(self,input):
-        for i  in input:
+    def send_feedback(self, input):
+        for i in input:
             print(input[i])
         name = ""
         email = ""
@@ -261,47 +189,72 @@ class database:
             if i == 'name':
                 name = input[i]
             if i == 'email':
-                email =  input[i]
+                email = input[i]
             if i == 'comment':
-                comment =  input[i]
+                comment = input[i]
         self.query(
-            """INSERT INTO feedback (name, email, comment) VALUES (%s,%s,%s) """,[name,email,comment])
+            """INSERT INTO feedback (name, email, comment) VALUES (%s,%s,%s) """, [name, email, comment])
         # print(values)
-        
+
     def get_feedback(self):
         data = self.query("SELECT * from feedback")
         return data
 
-        # return  {1:{'address': 'NULL',
-        #             'city': 'East Lansing',
-        #             'state': 'Michigan',
-        #             'type': 'Academia',
-        #             'zip': 'NULL',
-        #             'department': 'Computer Science',
-        #             'name': 'Michigan State University',
-        #             'positions': {1: {'end_date': None,
-        #                               'responsibilities': 'Teach classes; mostly NLP and Web design.',
-        #                               'start_date': datetime.date(2020, 1, 1),
-        #                               'title': 'Instructor',
-        #                               'experiences': {1: {'description': 'Taught an introductory course ... ',
-        #                                                   'end_date': None,
-        #                                                   'hyperlink': 'https://gitlab.msu.edu',
-        #                                                   'name': 'CSE 477',
-        #                                                   'skills': {},
-        #                                                   'start_date': None
-        #                                                   },
-        #                                               2: {'description': 'introduction to NLP ...',
-        #                                                   'end_date': None,
-        #                                                   'hyperlink': 'NULL',
-        #                                                   'name': 'CSE 847',
-        #                                                   'skills': {1: {'name': 'Javascript',
-        #                                                                  'skill_level': 7},
-        #                                                                2: {'name': 'Python',
-        #                                                                    'skill_level': 10},
-        #                                                                3: {'name': 'HTML',
-        #                                                                    'skill_level': 9},
-        #                                                                4: {'name': 'CSS',
-        #                                                                    'skill_level': 5}},
-        #                                                   'start_date': None
-        #                                                   }
-        #                                               }}}}}
+#######################################################################################
+# AUTHENTICATION RELATED
+#######################################################################################
+    def createUser(self, email='me@email.com', password='password', role='user'):
+        password = self.onewayEncrypt(password)
+        # return {'success': 1}
+        # if exist == 0:
+
+        # return {'success': 1}
+        # else:
+        #     return {'success': 0}
+
+        response = self.query(
+            """select exists(select * FROM users WHERE email=%s)""", parameters=[email])
+        # print(response)
+        for row in response:
+            for exist in row.values():
+                if exist == 0:
+                    self.query(
+                        """INSERT INTO users (email, password, role) VALUES (%s,%s,%s) """, [email, password, role])
+                    return {'success': 1}
+                else:
+                    return {'success': 0}
+        # response = self.query("""(select * FROM users WHERE email=%s)""", parameters = [email])
+        # print(response)
+
+    def authenticate(self, email='me@email.com', password='password'):
+        password = self.onewayEncrypt(password)
+        # print(enc_pass)
+        # print("auth")
+        print(self.query("""Select * from users"""))
+        response = self.query(
+            """select exists(select * FROM users WHERE email=%s and password=%s)""", parameters=[email, password])
+        for row in response:
+            for exist in row.values():
+                if exist == 1:
+                    return {'success': 1}
+                else:
+                    return {'success': 0}
+
+    def onewayEncrypt(self, string):
+        encrypted_string = hashlib.scrypt(string.encode('utf-8'),
+                                          salt=self.encryption['oneway']['salt'],
+                                          n=self.encryption['oneway']['n'],
+                                          r=self.encryption['oneway']['r'],
+                                          p=self.encryption['oneway']['p']
+                                          ).hex()
+        return encrypted_string
+
+    def reversibleEncrypt(self, type, message):
+        fernet = Fernet(self.encryption['reversible']['key'])
+
+        if type == 'encrypt':
+            message = fernet.encrypt(message.encode())
+        elif type == 'decrypt':
+            message = fernet.decrypt(message).decode()
+
+        return message

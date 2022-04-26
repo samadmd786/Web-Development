@@ -1,5 +1,5 @@
 # Author  : Prof. MM Ghassemi <ghassem3@msu.edu>
-# Access instance using `docker exec -it hw2-container_flask-app bash`
+# Access instance using `docker exec -it hw3-container_flask-app bash`
 
 # Instantiate Ubuntu 20.04
 FROM ubuntu:20.04
@@ -29,5 +29,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080 
 ENV PORT 8080
 ENV FLASK_ENV=production  
-CMD service mysql start && exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
+CMD service mysql start && exec gunicorn --bind :$PORT --workers 1 --worker-class eventlet --threads 8 --timeout 0 app:app
 # ----------------------------------------------------- 

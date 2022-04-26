@@ -128,6 +128,7 @@
     margin-left: 0;
     padding-left: 3%;
     padding-right: 3%;
+    z-index: 999;
   }
 }
 
@@ -157,8 +158,10 @@
   display: none;
   float: left;
   padding-top: 0px;
+  z-index: 999;
 
 }
+
 
 #feedback-div {
   background-color: #48484866;
@@ -173,6 +176,7 @@
   margin-top: 30px;
   margin-left: -260px;
   position: fixed;
+  z-index: 999;
 }
 
 .feedback-input {
@@ -187,6 +191,7 @@
   width: 100%;
   box-sizing: border-box;
   border: 3px solid #b88a8aec;
+  z-index: 999;
 }
 
 .feedback-input:focus {
@@ -196,6 +201,7 @@
   color: #3498db;
   outline: none;
   padding: 13px 13px 13px 54px;
+  z-index: 999;
 }
 
 
@@ -205,6 +211,7 @@
   background-size: 30px 30px;
   background-position: 11px 8px;
   background-repeat: no-repeat;
+  z-index: 999;
 }
 
 #feedback-name:focus {
@@ -212,24 +219,28 @@
   background-position: 8px 5px;
   background-position: 11px 8px;
   background-repeat: no-repeat;
+  z-index: 999;
 }
 
 #feedback-email {
   background-size: 30px 30px;
   background-position: 11px 8px;
   background-repeat: no-repeat;
+  z-index: 999;
 }
 
 #feedback-email:focus {
   background-size: 30px 30px;
   background-position: 11px 8px;
   background-repeat: no-repeat;
+  z-index: 999;
 }
 
 #feedback-comment {
   background-size: 30px 30px;
   background-position: 11px 8px;
   background-repeat: no-repeat;
+  z-index: 999;
 }
 
 #feedback-comment {
@@ -237,6 +248,7 @@
   height: 140px;
   line-height: 140%;
   resize: vertical;
+  z-index: 999;
 }
 
 
