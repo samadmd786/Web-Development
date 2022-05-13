@@ -1,0 +1,59 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Wordle{% endblock %}
+
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+{% endblock %}
+
+
+{% block maincontent %}
+
+
+
+<div class="wordle_inst">
+    <div class="popupBoxInit">
+        <div class="worlde-inst-text">
+            Wordle Instructions
+        </div>
+        <div class="close">
+            <img src="../static/wordle/images/clase.jpg">
+        </div>
+        <div class="insBx">
+            <img src="../static/wordle/images/inst.jpg">
+        </div>
+    </div>
+</div>
+<div class="wordle-game">
+
+    <div class="game-container">
+        <div class="title-container">
+            <h1>Wordle</h1>
+        </div>
+        <div id="general">
+            <div id="succ">Start game</div>
+            <div id="guess"></div>
+            <div id="hid"></div>
+        </div>
+        <div class="tile-container"></div>
+        <button type="button" id="leaderboardtable" onclick="leaderboard()"> Press here to view the leaderboard</button>
+        <!-- <a href="leaderboard.html">Press here to view the leaderboard</a> -->
+        <div class="key-container"></div>
+    </div>
+
+</div>
+
+<br><br><br><br><br>
+<br>
+<br>
+<br><br><br><br><br>
+<br>
+<br>
+<br><br><br><br><br>
+
+
+
+
+{% endblock %}

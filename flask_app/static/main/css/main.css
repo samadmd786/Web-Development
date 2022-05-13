@@ -173,7 +173,7 @@
   float: left;
   left: 50%;
   position: absolute;
-  margin-top: 30px;
+  margin-top: -25%;
   margin-left: -260px;
   position: fixed;
   z-index: 999;

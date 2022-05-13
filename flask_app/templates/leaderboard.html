@@ -1,0 +1,22 @@
+{% extends 'shared/layout.html' %}
+
+{% block content %}Leaderboard{% endblock %}
+
+
+
+
+{% block maincontent %}
+<h1>Leaderboard Data</h1>
+
+<p> User word of the day time taken</p>
+<hr>
+{% for lead in lead_data %}
+<div class="leaddata">
+<p>{{lead['user']}} | {{lead['word']}}  | {{lead['time']}} </p>
+</div>
+<hr>
+
+
+
+{% endfor %}
+{% endblock %}

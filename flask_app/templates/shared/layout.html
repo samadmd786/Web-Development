@@ -12,8 +12,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='main/css/chat.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='main/css/signup.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='piano/css/piano.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='wordle/css/wordle.css') }}">
   <script src="../static/main/js/main.js" defer></script>
   <script src="../static/piano/js/piano.js" defer></script>
+  <script src="../static/wordle/js/wordle.js" defer></script>
   {% block extrajs %} {% endblock %}
   <!-- Title of the page -->
   <title>
@@ -35,13 +37,9 @@
     <div class="nav">
       <input type="checkbox" id="nav-check">
       <div class="nav-header">
-        <!-- <div id="nav-title">
-          CSE 477 - Homework 3
-        </div> -->
-
         <div id="nav-title">
           {% if user == 'Unknown' %}  
-          CSE 477 - Homework 3
+          CSE 477 - Final Exam
           {% else %}
           Logged in as {{user}}
           {% endif %}

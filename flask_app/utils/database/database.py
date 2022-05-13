@@ -70,7 +70,7 @@ class database:
         # print('I create and populate database tables.')
 
         table = ["skills", "experiences", "positions",
-                 "institutions", "feedback"]
+                 "institutions", "feedback" ]
         for k in table:
             self.query(f"""DROP table IF EXISTS {k};""")
 
@@ -86,9 +86,11 @@ class database:
             a = (next(csv_file, None))
             for i in csv_file:
                 self.insertRows(table_name, [j.strip() for j in a], i)
-        query = open(data_path+"create_tables/users.sql")
-        file = query.read()
-        self.query(file)
+        table = ["users", "leaderboard"]
+        for table_name in table:
+            query = open(data_path+"create_tables/"+table_name+".sql")
+            file = query.read()
+            self.query(file)
 
         self.getResumeData()
 
@@ -198,6 +200,30 @@ class database:
 
     def get_feedback(self):
         data = self.query("SELECT * from feedback")
+        self.get_leaderboard()
+        return data
+
+    def send_leaderboard(self,user, word,time, date):
+        print(date)
+        print(type(date))
+        self.query(
+            """INSERT INTO leaderboard (word, user, time, date) VALUES (%s,%s,%s,%s) """, [word, user, time,date])
+
+        
+    def get_leaderboard(self):
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        today_date = self.query("SELECT CURDATE() AS date;")
+        # print(today_date)
+        date = ""
+        for i in today_date:
+            # print(i["date"])
+            date = i["date"]
+        date = str(date)
+        print(date)
+        print(type(date))
+        data = self.query("SELECT * from leaderboard where date = %s ORDER BY time",parameters=[date])
+        # data = self.query("SELECT * from leaderboard ORDER BY time limit 5;")
+        
         return data
 
 #######################################################################################
@@ -205,13 +231,6 @@ class database:
 #######################################################################################
     def createUser(self, email='me@email.com', password='password', role='user'):
         password = self.onewayEncrypt(password)
-        # return {'success': 1}
-        # if exist == 0:
-
-        # return {'success': 1}
-        # else:
-        #     return {'success': 0}
-
         response = self.query(
             """select exists(select * FROM users WHERE email=%s)""", parameters=[email])
         # print(response)
@@ -223,14 +242,11 @@ class database:
                     return {'success': 1}
                 else:
                     return {'success': 0}
-        # response = self.query("""(select * FROM users WHERE email=%s)""", parameters = [email])
-        # print(response)
 
     def authenticate(self, email='me@email.com', password='password'):
         password = self.onewayEncrypt(password)
         # print(enc_pass)
         # print("auth")
-        print(self.query("""Select * from users"""))
         response = self.query(
             """select exists(select * FROM users WHERE email=%s and password=%s)""", parameters=[email, password])
         for row in response:

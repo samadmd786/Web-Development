@@ -85,7 +85,7 @@ def joined(message):
     if (getUser() == "owner@email.com"):
         style = 'width: 100%;color:blue;text-align: right'
     else:
-        style = 'width: 100%;color:grey;text-align: left'
+        style = 'width: 100%;color:red;text-align: left'
     emit('status', {'msg': getUser() +
          ' has entered the room.', 'style': style}, room='main')
 
@@ -95,7 +95,7 @@ def send_message(message):
     if (getUser() == "owner@email.com"):
         style = 'width: 100%;color:blue;text-align: right'
     else:
-        style = 'width: 100%;color:grey;text-align: left'
+        style = 'width: 100%;color:red;text-align: left'
     emit('status1', {'msg': getUser() + ' said ' +
          message, 'style': style}, room='main')
 
@@ -106,12 +106,46 @@ def left(message):
     if (getUser() == "owner@email.com"):
         style = 'width: 100%;color:blue;text-align: right'
     else:
-        style = 'width: 100%;color:grey;text-align: left'
+        style = 'width: 100%;color:red;text-align: left'
     emit('status2', {'msg': getUser() +
          ' left the room. ', 'style': style}, room='main')
 
 
+#######################################################################################
+# WORDLE GAME
+#######################################################################################
 
+@app.route('/wordle.html')
+@login_required
+def wordle():
+    return render_template('wordle.html', user=getUser())
+
+#######################################################################################
+# LEADERBOARD FOR WORDLE
+#######################################################################################
+
+
+@app.route('/processleaderboard', methods=['POST'])
+def processleaderboard():
+    form_fields = dict((key, request.form.getlist(
+        key)[0]) for key in list(request.form.keys()))
+    word = form_fields['response']
+    time = form_fields['time']
+    date = form_fields['date']
+    db.send_leaderboard(getUser(), word, time, date)
+    return {'success': 1}
+    # return render_template('leaderboard.html', user=getUser())
+
+
+@app.route('/leaderboard', methods=['POST'])
+def leaderboard():
+    data = db.get_leaderboard()
+    return render_template("leaderboard.html", user=getUser(), lead_data = data)
+
+@app.route('/leaderboard.html')
+def leaderboard2():
+    data = db.get_leaderboard()
+    return render_template("leaderboard.html", user=getUser(),lead_data = data)
 #######################################################################################
 # OTHER
 #######################################################################################
@@ -161,7 +195,7 @@ def processfeedback():
     feedback_data = request.form
     db.send_feedback(feedback_data)
     get_data = db.get_feedback()
-    return render_template('processfeedback.html', feedback=get_data)
+    return render_template('processfeedback.html', feedback=get_data, user=getUser())
 
 
 @app.route("/static/<path:path>")

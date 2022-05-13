@@ -1,6 +1,6 @@
-const keys = document.querySelectorAll('.key');
-const whiteKeys = document.querySelectorAll('.key.white');
-const blackKeys = document.querySelectorAll('.key.black');
+const keys1 = document.querySelectorAll('.key');
+const whitekeys1 = document.querySelectorAll('.key.white');
+const blackkeys1 = document.querySelectorAll('.key.black');
 const creepy = document.getElementById('end');
 // document.querySelector(".awkownimage").style.opacity = 0;
 const whites = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'];
@@ -8,7 +8,7 @@ const blacks = ['w', 'e', 't', 'y', 'u', 'o', 'p']
 let str = "weseeyo";
 let findstr = "";
 // Here we are using the button to play the sound
-keys.forEach(key => {
+keys1.forEach(key => {
     key.addEventListener('click', () => playNote(key))
 })
 
@@ -19,12 +19,12 @@ document.addEventListener('keydown', ke => {
     const whiteKeyIndex = whites.indexOf(key)
     const blackKeyIndex = blacks.indexOf(key)
     if (blackKeyIndex >= 0) {
-        playNote(blackKeys[blackKeyIndex])
+        playNote(blackkeys1[blackKeyIndex])
         findstr += key;
     }
 
     if (whiteKeyIndex >= 0) {
-        playNote(whiteKeys[whiteKeyIndex])
+        playNote(whitekeys1[whiteKeyIndex])
         findstr += key;
     }
     
@@ -50,7 +50,7 @@ let playNote = (key) => {
         document.getElementById("piano-text").innerHTML = "I have awoken";
         creepy.play();
 
-        keys.forEach(key => {
+        keys1.forEach(key => {
             key.removeEventListener('click', () => playNote(key))
         })
         
