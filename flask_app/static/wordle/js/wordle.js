@@ -48,16 +48,16 @@ const options2 = {
 };
 
 
-// function getvals() {
-//     return fetch('https://random-words5.p.rapidapi.com/getMultipleRandom?count=5', options2)
-//         .then((response) => response.json())
-//         .then((responseData) => {
-//             var wo = responseData[1];
-//             console.log(wo);
-//             return wo;
-//         })
-//         .catch(error => console.warn(error));
-// }
+function getvals() {
+    return fetch('https://random-words5.p.rapidapi.com/getMultipleRandom?count=5', options2)
+        .then((response) => response.json())
+        .then((responseData) => {
+            var wo = responseData[1];
+            console.log(wo);
+            return wo;
+        })
+        .catch(error => console.warn(error));
+}
 
 
 // function getvals() {
@@ -72,16 +72,16 @@ const options2 = {
 
 
 
-function getvals() {
-    return fetch('https://word-of-the-day2.p.rapidapi.com/word/dc', options1)
-        .then((response) => response.json())
-        .then((responseData) => {
-            var word = responseData[0]["word"]
-            var wordl = word.split(' ');
-            return wordl[0];
-        })
-        .catch(error => console.warn(error));
-}
+// function getvals() {
+//     return fetch('https://word-of-the-day2.p.rapidapi.com/word/dc', options1)
+//         .then((response) => response.json())
+//         .then((responseData) => {
+//             var word = responseData[0]["word"]
+//             var wordl = word.split(' ');
+//             return wordl[0];
+//         })
+//         .catch(error => console.warn(error));
+// }
 
 getvals().then(response => {
     var rowGuess;
