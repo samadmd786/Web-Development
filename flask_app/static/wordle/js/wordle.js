@@ -34,16 +34,16 @@ close.addEventListener('click', () => {
 const options1 = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Host': 'word-of-the-day2.p.rapidapi.com',
-        'X-RapidAPI-Key': '00d9efb8a4msh10b09ab70b1a997p11aba5jsn385600a2301e'
+        'X-RapidAPI-Host': options1_host,
+        'X-RapidAPI-Key': options1_key
     }
 };
 
 const options2 = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Host': 'random-words5.p.rapidapi.com',
-        'X-RapidAPI-Key': '00d9efb8a4msh10b09ab70b1a997p11aba5jsn385600a2301e'
+        'X-RapidAPI-Host': options2_host,
+        'X-RapidAPI-Key': options2_key
     }
 };
 
