@@ -183,8 +183,8 @@ getvals().then(response => {
             const options = {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
-                    'X-RapidAPI-Key': '00d9efb8a4msh10b09ab70b1a997p11aba5jsn385600a2301e'
+                    'X-RapidAPI-Host': options_host,
+                    'X-RapidAPI-Key': options_key
                 }
             };
 
